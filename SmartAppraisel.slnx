@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="BL_SmartAppraisel/BL_SmartAppraisel.csproj" />
+  <Project Path="DL_SmartAppraisel/DL_SmartAppraisel.csproj" />
+  <Project Path="SmartAppraisel/SmartAppraisel.csproj" />
+</Solution>
