@@ -1,0 +1,61 @@
+﻿@model SmartAppraisel.ViewModels.UserCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create User</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateUser" method="post">
+          
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- UserId -->
+            <div class="form-group mb-2">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group mb-2">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <!-- Designation -->
+            <div class="form-group mb-2">
+                <label asp-for="DesgnId" class="control-label"></label>
+                <select asp-for="DesgnId"
+                        asp-items="ViewBag.Designations"
+                        class="form-control">
+                    <option value="">-- Select Designation --</option>
+                </select>
+                <span asp-validation-for="DesgnId" class="text-danger"></span>
+            </div>
+
+            <!-- Role -->
+            <div class="form-group mb-3">
+                <label asp-for="RoleId" class="control-label"></label>
+                <select asp-for="RoleId"
+                        asp-items="ViewBag.Roles"
+                        class="form-control">
+                    <option value="">-- Select Role --</option>
+                </select>
+                <span asp-validation-for="RoleId" class="text-danger"></span>
+            </div>
+
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary ms-2">Back</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
