@@ -23,6 +23,15 @@ namespace BL_SmartAppraisel
         {
             return repo.GetRoleDetails();
         }
+        public bool ChangePassword(string UserId, string OldPassword, string NewPassword)
+        {
+            return repo.ChangePassword(UserId, OldPassword, NewPassword);
+        }
+
+        public UserDetail AuthenticateUser(string UserId, string Password)
+        {
+            return repo.AuthenticateUser( UserId, Password);
+        }
 
     }
 }

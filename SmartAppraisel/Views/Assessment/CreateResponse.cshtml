@@ -1,0 +1,94 @@
+@model DL_SmartAppraisel.Model.AssessmentResponse
+
+@{
+    ViewData["Title"] = "Create Assessment Response";
+}
+
+<h3>Create Assessment Question</h3>
+<hr />
+
+<form asp-action="Create" method="post">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <input type="hidden" asp-for="AssessmentID" />
+
+    <!-- Question -->
+    <div class="form-group mb-3">
+        <label asp-for="Question"></label>
+        <input asp-for="Question" class="form-control" />
+        <span asp-validation-for="Question" class="text-danger"></span>
+    </div>
+
+    <!-- Answer A -->
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <label>Answer A</label>
+            <input asp-for="Answer1" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label>Competency</label>
+            <select asp-for="CompetencyIDForQ1"
+                    asp-items="ViewBag.Competencies"
+                    class="form-control">
+                <option value="">-- Select Competency --</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Answer B -->
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <label>Answer B</label>
+            <input asp-for="Answer2" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label>Competency</label>
+            <select asp-for="CompetencyIDForQ2"
+                    asp-items="ViewBag.Competencies"
+                    class="form-control">
+                <option value="">-- Select Competency --</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Answer C -->
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <label>Answer C</label>
+            <input asp-for="Answer3" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label>Competency</label>
+            <select asp-for="CompetencyIDForQ3"
+                    asp-items="ViewBag.Competencies"
+                    class="form-control">
+                <option value="">-- Select Competency --</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Answer D -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label>Answer D</label>
+            <input asp-for="Answer4" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label>Competency</label>
+            <select asp-for="CompetencyIDForQ4"
+                    asp-items="ViewBag.Competencies"
+                    class="form-control">
+                <option value="">-- Select Competency --</option>
+            </select>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save & Next</button>
+    <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

@@ -1,0 +1,58 @@
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+const handleSubmit=()=>{
+         let userId=$('#UserId').val();
+        let password=$('#Password').val();
+        if(userId==null || userId==""){
+            alert("UserId is required");
+            return false;
+        }
+        if(password==null || password==""){
+            alert("Password is required");
+            return false;
+        }
+        if(password.length<6){
+            alert("Password must be at least 6 characters long");
+            return false;
+        }
+         if(password.length>50){
+                alert("Password must maximum of 50 characters long ");
+            return false;
+        }
+        else
+        return true
+}
+   
+   
+</script>
+<h2>User Login</h2>
+<hr />
+
+<form asp-action="AuthenticateUser" method="post">
+    @Html.AntiForgeryToken()
+
+    <!-- UserId -->
+    <div class="form-group mb-2">
+        <label >UserId</label>
+        <input type="text" name="UserId" id="UserId" class="form-control" />
+       
+    </div>
+
+    <!-- Password -->
+    <div class="form-group mb-2">
+        <label>Password</label>
+        <input type="password" name="Password" id="Password" class="form-control" />
+   
+    </div>
+
+    <button type="submit" class="btn btn-primary" onclick="return handleSubmit()">Login</button><br/>
+    <div class="text-danger">@ViewBag.ErrorMessage</div>
+
+   
+
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

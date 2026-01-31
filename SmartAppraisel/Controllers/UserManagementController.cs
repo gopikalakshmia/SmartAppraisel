@@ -10,18 +10,33 @@ namespace SmartAppraisel.Controllers
 {
     public class UserManagementController : Controller
     {
-       BL_SmartAppraisel.BL_UserManagement userMgmtBL = new BL_SmartAppraisel.BL_UserManagement();
+        BL_SmartAppraisel.BL_UserManagement userMgmtBL = new BL_SmartAppraisel.BL_UserManagement();
 
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: UserManagementController/Details/5
-        public ActionResult Details(int id)
+        [HttpPost]
+        public ActionResult AuthenticateUser(string UserId, string Password)
         {
-            return View();
+            var user = userMgmtBL.AuthenticateUser(UserId, Password);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = "Invalid UserId or Password";
+                return View("Index");
+            }
+
+            if (user.LastPasswordDate == null)
+            {
+                return RedirectToAction("ChangePassword", "UserManagement");
+            }
+
+            return RedirectToAction("Index", "Home");
         }
+
+
 
         // GET: UserManagementController/Create
         public ActionResult Create()
@@ -45,73 +60,31 @@ namespace SmartAppraisel.Controllers
             return View();
         }
         [HttpPost]
-        public  ActionResult CreateUser(UserCreateViewModel newUser)
+        public ActionResult CreateUser(UserCreateViewModel newUser)
         {
 
-            if ( newUser!=null) {
+            if (newUser != null)
+            {
 
                 userMgmtBL.CreateUser(newUser);
                 return RedirectToAction("Index");
             }
-           
+
             return View();
         }
-
-        // POST: UserMnagementController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: UserMnagementController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult ChangePassword()
         {
             return View();
         }
-
-        // POST: UserMnagementController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult ChangePasswordPost(string UserId, string OldPassword, string NewPassword)
         {
-            try
+            if (userMgmtBL.ChangePassword(UserId, OldPassword, NewPassword))
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            ViewBag.ErrorMessage = "Password is not changed";
+            return View("ChangePassword");
         }
 
-        // GET: UserMnagementController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
         }
-
-        // POST: UserMnagementController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-    }
 }

@@ -16,10 +16,11 @@ namespace DL_SmartAppraisel.Repository
             {
                 UserDetail newUserDb = new UserDetail();
                 newUserDb.DesgnId = userDetail.DesgnId;
-                newUserDb.ProjectId = userDetail.RoleId;
+                newUserDb.RoleId = userDetail.RoleId;
                 newUserDb.UserId = userDetail.UserId;
                 newUserDb.Password = userDetail.Password;
-
+                newUserDb.Email = userDetail.Email;
+                newUserDb.LastPasswordDate = null;
                 db.UserDetails.Add(newUserDb);
                 db.SaveChanges();
             }
@@ -33,6 +34,26 @@ namespace DL_SmartAppraisel.Repository
         public List<DesignationDetail> GetDesignationDetails()
         {
             return db.DesignationDetails.ToList();
+        }
+
+        public UserDetail AuthenticateUser(string UserId,string Password)
+        {
+            var user = db.UserDetails.FirstOrDefault(u => u.UserId == UserId && u.Password == Password);
+            return user;
+        }
+
+        public bool ChangePassword(string UserId, string OldPassword, string NewPassword)
+        {
+            var user = db.UserDetails.FirstOrDefault(u => u.UserId == UserId && u.Password == OldPassword);
+            if (user != null)
+            {
+                user.Password = NewPassword;
+                user.LastPasswordDate = DateTime.Now;
+                db.SaveChanges();
+                return true;
+            }
+            else
+                return false;
         }
 
     }

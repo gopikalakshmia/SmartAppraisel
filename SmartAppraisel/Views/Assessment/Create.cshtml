@@ -1,0 +1,52 @@
+@model DL_SmartAppraisel.Model.AssessmentDetail
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create User</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateAssessment" method="post">
+         
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Password -->
+            <div class="form-group mb-2">
+                <label asp-for="AssessmentName" class="control-label"></label>
+                <input asp-for="AssessmentName" type="text" class="form-control" />
+                <span asp-validation-for="AssessmentName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="AssmtDate" class="control-label"></label>
+                <input asp-for="AssmtDate" type="date" class="form-control" />
+                <span asp-validation-for="AssmtDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" type="text" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+             <div class="form-group mb-2">
+                <label asp-for="IsActive" class="control-label"></label>
+                <input asp-for="IsActive" type="checkbox" class="form-check-input" />
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+
+            
+
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary ms-2">Back</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

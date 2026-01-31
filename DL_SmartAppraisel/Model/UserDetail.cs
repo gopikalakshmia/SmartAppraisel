@@ -19,11 +19,20 @@ namespace DL_SmartAppraisel.Model
         [Required]
         [Unicode(false)]
         [StringLength(50)]
+        [MaxLength(50),MinLength(8)]
         public string Password { get; set; }
         [Required]
         public int DesgnId { get; set; }
         [Required]
-        public int ProjectId { get; set; }
-        public DateTime LastPasswordDate { get; set; }
+        public int RoleId { get; set; }
+
+        [Required]
+        [Unicode(false)]
+        [StringLength(50)]
+        [MaxLength(50), MinLength(8)]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        public DateTime? LastPasswordDate { get; set; }
     }
 }

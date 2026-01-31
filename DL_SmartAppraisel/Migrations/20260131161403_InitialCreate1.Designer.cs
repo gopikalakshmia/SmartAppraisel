@@ -4,6 +4,7 @@ using DL_SmartAppraisel.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DL_SmartAppraisel.Migrations
 {
     [DbContext(typeof(SmartAppraiselDbContext))]
-    partial class SmartAppraiselDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260131161403_InitialCreate1")]
+    partial class InitialCreate1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,89 +52,6 @@ namespace DL_SmartAppraisel.Migrations
                     b.HasKey("AssessmentID");
 
                     b.ToTable("AssessmentDetails");
-                });
-
-            modelBuilder.Entity("DL_SmartAppraisel.Model.AssessmentResponse", b =>
-                {
-                    b.Property<int>("ResponseID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ResponseID"));
-
-                    b.Property<string>("Answer1")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Answer2")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Answer3")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Answer4")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("AssessmentID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CompetencyIDForQ1")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CompetencyIDForQ2")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CompetencyIDForQ3")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CompetencyIDForQ4")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Question")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ResponseID");
-
-                    b.HasIndex("AssessmentID");
-
-                    b.ToTable("AssessmentResponses");
-                });
-
-            modelBuilder.Entity("DL_SmartAppraisel.Model.CompetencyDetail", b =>
-                {
-                    b.Property<int>("CompID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CompID"));
-
-                    b.Property<string>("CompName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("CompID");
-
-                    b.ToTable("CompetencyDetails");
                 });
 
             modelBuilder.Entity("DL_SmartAppraisel.Model.DesignationDetail", b =>
@@ -227,17 +147,6 @@ namespace DL_SmartAppraisel.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserDetails");
-                });
-
-            modelBuilder.Entity("DL_SmartAppraisel.Model.AssessmentResponse", b =>
-                {
-                    b.HasOne("DL_SmartAppraisel.Model.AssessmentDetail", "Assessment")
-                        .WithMany()
-                        .HasForeignKey("AssessmentID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Assessment");
                 });
 #pragma warning restore 612, 618
         }

@@ -14,10 +14,18 @@ namespace DL_SmartAppraisel.Model
         public DbSet<UserDetail> UserDetails { get; set; }
         public DbSet<DesignationDetail> DesignationDetails { get; set; }
         public DbSet<RoleDetail> RoleDetails { get; set; }
+
+        public DbSet<AssessmentDetail> AssessmentDetails { get; set; }
+
+        public DbSet<CompetencyDetail> CompetencyDetails { get; set; }
+
+        public DbSet<AssessmentResponse> AssessmentResponses { get; set; }
+
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if(!optionsBuilder.IsConfigured)
-            optionsBuilder.UseSqlServer("Server=localhost;Database=SmartAppraisel_DB;User Id=sa;Password=password;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=SmartAppraisel_DB;User Id=sa;Password=Strong@123;TrustServerCertificate=True");
 
             base.OnConfiguring(optionsBuilder);
 
