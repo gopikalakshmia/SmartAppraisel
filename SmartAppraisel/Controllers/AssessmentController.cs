@@ -39,8 +39,7 @@ namespace SmartAppraisel.Controllers
         {
             ViewBag.AssessmentID = AssessmentID;
             ViewBag.QuestionID = questionID;
-            var competencies = AssessmentMgmtBL.GetAllCompetencies() ?? new List<CompetencyDetail>();
-            ViewBag.Competencies = new SelectList(competencies, "CompetencyID", "CompetencyName");
+            ViewBag.Competencies = new SelectList(AssessmentMgmtBL.GetAllCompetencies(), "CompID", "CompName");
             return View();
         }
         
