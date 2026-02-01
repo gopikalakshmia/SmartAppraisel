@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SmartAppraisel.ViewModels;
 using BL_SmartAppraisel;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 
 
 namespace SmartAppraisel.Controllers
@@ -23,7 +24,7 @@ namespace SmartAppraisel.Controllers
             return View();
         }
 
-    [HttpPost]
+        [HttpPost]
         public ActionResult CreateAssessment(AssessmentDetail newAssessmentDetail)
         {
             if (newAssessmentDetail != null)
@@ -35,25 +36,51 @@ namespace SmartAppraisel.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult CreateResponse(int AssessmentID,int questionID=1)
+        public ActionResult CreateResponse(int AssessmentID, int questionID = 1)
         {
             ViewBag.AssessmentID = AssessmentID;
             ViewBag.QuestionID = questionID;
             ViewBag.Competencies = new SelectList(AssessmentMgmtBL.GetAllCompetencies(), "CompID", "CompName");
             return View();
         }
-        
 
-        public string CreateAssessmentResponse(AssessmentResponse newAssessmentResponse)
+
+        public IActionResult CreateAssessmentResponse(AssessmentResponse newAssessmentResponse)
         {
-            if (newAssessmentResponse != null)
+            int pageNo = HttpContext.Session.GetInt32("PageNo") ?? 0;
+            pageNo++;
+
+            HttpContext.Session.SetInt32("PageNo", pageNo);
+            if (pageNo == 5)
             {
-                return AssessmentMgmtBL.CreateAssessmentResponse(newAssessmentResponse);
+                HttpContext.Session.Remove("PageNo");
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                if (newAssessmentResponse != null)
+                {
+                    var model = new AssessmentResponse
+                    {
+                        AssessmentID = newAssessmentResponse.AssessmentID,
+                        Question = newAssessmentResponse.Question,
+                        Answer1 = newAssessmentResponse.Answer1,
+                        Answer2 = newAssessmentResponse.Answer2,
+                        Answer3 = newAssessmentResponse.Answer3,
+                        Answer4 = newAssessmentResponse.Answer4,
+                        CompetencyIDForQ1 = newAssessmentResponse.CompetencyIDForQ1,
+                        CompetencyIDForQ2 = newAssessmentResponse.CompetencyIDForQ2,
+                        CompetencyIDForQ3 = newAssessmentResponse.CompetencyIDForQ3,
+                        CompetencyIDForQ4 = newAssessmentResponse.CompetencyIDForQ4
+                    };
+                    AssessmentMgmtBL.CreateAssessmentResponse(model);
+                    return RedirectToAction("CreateResponse", new { AssessmentID = model.AssessmentID, questionID = pageNo });
+                }
             }
 
-            return "Invalid Response";
+            return View(newAssessmentResponse);
         }
 
-        
+
     }
 }

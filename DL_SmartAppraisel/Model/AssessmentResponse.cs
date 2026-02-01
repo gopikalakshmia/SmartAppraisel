@@ -12,6 +12,7 @@ namespace DL_SmartAppraisel.Model
 
         [Required]
         public int AssessmentID { get; set; }
+        
 
         [Required]
         public string Question { get; set; }
@@ -40,10 +41,6 @@ namespace DL_SmartAppraisel.Model
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
-        /* Navigation properties (optional but recommended) */
-
-        [ForeignKey(nameof(AssessmentID))]
-        public AssessmentDetail Assessment { get; set; }
 
     }
 }
