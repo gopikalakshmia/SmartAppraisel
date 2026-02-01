@@ -26,6 +26,14 @@ namespace BL_SmartAppraisel
         {
             return repo.GetAllCompetencies();
         }
+        public List<AssessmentResponse> GetAssessmentResponses(int AssessmentID)
+        {
+            return repo.GetAssessmentResponses(AssessmentID);
+        }
+        public void ReviewAssessment(int AssessmentID, string Comment)
+        {
+            repo.ReviewAssessment(AssessmentID, Comment);
+        }
        
 
     }

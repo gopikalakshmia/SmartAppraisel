@@ -4,7 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using SmartAppraisel.ViewModels;
 using BL_SmartAppraisel;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
+using System.Threading.Tasks;
 
 namespace SmartAppraisel.Controllers
 {
@@ -12,13 +16,14 @@ namespace SmartAppraisel.Controllers
     {
         BL_SmartAppraisel.BL_UserManagement userMgmtBL = new BL_SmartAppraisel.BL_UserManagement();
 
+
         public ActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult AuthenticateUser(string UserId, string Password)
+        public  async Task<IActionResult> AuthenticateUser(string UserId, string Password)
         {
             var user = userMgmtBL.AuthenticateUser(UserId, Password);
 
@@ -33,6 +38,31 @@ namespace SmartAppraisel.Controllers
                 return RedirectToAction("ChangePassword", "UserManagement");
             }
 
+
+            var claims = new List<Claim>
+          {
+                 new Claim(ClaimTypes.Name, user.UserId),
+                new Claim(ClaimTypes.NameIdentifier, user.UserId),
+                new Claim(ClaimTypes.Role, user.RoleId.ToString())   // 1002-hr
+          };
+
+            var identity = new ClaimsIdentity(
+                claims,
+                CookieAuthenticationDefaults.AuthenticationScheme
+            );
+
+        
+            var principal = new ClaimsPrincipal(identity);
+
+           
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                principal
+            );
+    
+            if (user.RoleId == 1002) {
+                return RedirectToAction("Index", "Assessment");
+            }
             return RedirectToAction("Index", "Home");
         }
 
@@ -86,5 +116,5 @@ namespace SmartAppraisel.Controllers
             return View("ChangePassword");
         }
 
-        }
+    }
 }

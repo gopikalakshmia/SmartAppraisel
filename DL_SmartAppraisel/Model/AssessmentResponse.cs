@@ -40,6 +40,7 @@ namespace DL_SmartAppraisel.Model
         public int CompetencyIDForQ4 { get; set; }
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
+        
 
 
     }

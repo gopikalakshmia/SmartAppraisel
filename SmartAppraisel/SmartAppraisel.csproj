@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BL_SmartAppraisel\BL_SmartAppraisel.csproj" />
+      <ProjectReference Include="..\UL_SmartAppraisel.EmailSenderUtility\UL_SmartAppraisel.EmailSenderUtility.csproj" />
   </ItemGroup>
 
 </Project>

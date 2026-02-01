@@ -38,5 +38,20 @@ namespace DL_SmartAppraisel.Repository
         {
             return db.CompetencyDetails.ToList();
         }
+        public List<AssessmentResponse> GetAssessmentResponses(int AssessmentID)
+        {
+            return db.AssessmentResponses.Where(r => r.AssessmentID == AssessmentID).ToList();
+        }
+        public void ReviewAssessment(int AssessmentID, string Comment)
+        {
+            var assessment = db.AssessmentDetails.FirstOrDefault(a => a.AssessmentID == AssessmentID);
+            if (assessment != null)
+            {
+                assessment.IsReviewed = true;
+                assessment.Comment = Comment;
+                db.SaveChanges();   
+            }
+                
+            }
     }
 }

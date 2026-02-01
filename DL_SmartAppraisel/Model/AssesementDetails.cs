@@ -25,5 +25,7 @@ namespace DL_SmartAppraisel.Model
 
    [Required]
         public bool IsActive { get; set; }
+          public bool IsReviewed { get; set; } 
+           public string? Comment { get; set; } 
     }
 }

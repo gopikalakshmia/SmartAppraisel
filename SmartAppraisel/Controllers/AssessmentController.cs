@@ -5,10 +5,12 @@ using SmartAppraisel.ViewModels;
 using BL_SmartAppraisel;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace SmartAppraisel.Controllers
 {
+    [Authorize(Roles = "1002")]
     public class AssessmentController : Controller
     {
         BL_SmartAppraisel.BL_AssessmentManagement AssessmentMgmtBL = new BL_SmartAppraisel.BL_AssessmentManagement();
@@ -29,8 +31,10 @@ namespace SmartAppraisel.Controllers
         {
             if (newAssessmentDetail != null)
             {
+                newAssessmentDetail.IsReviewed = false;
+                newAssessmentDetail.Comment = null;
                 AssessmentMgmtBL.CreateAssessment(newAssessmentDetail);
-                return RedirectToAction("Index");
+                return RedirectToAction("CreateResponse", new { AssessmentID = newAssessmentDetail.AssessmentID, questionID = 1 });
             }
 
             return View();
@@ -79,6 +83,20 @@ namespace SmartAppraisel.Controllers
             }
 
             return View(newAssessmentResponse);
+        }
+        [HttpGet]
+        public ActionResult Review(int AssessmentID)
+        {
+            
+            var Responses = AssessmentMgmtBL.GetAssessmentResponses(AssessmentID);
+            var competencyDictionary= AssessmentMgmtBL.GetAllCompetencies().ToDictionary(c => c.CompID, c => c.CompName);
+            ViewBag.Competencies = competencyDictionary;
+            return View(Responses);
+        }
+        public ActionResult SubmitReview(int AssessmentID, string Comments)
+        {
+            AssessmentMgmtBL.ReviewAssessment(AssessmentID, Comments);
+            return RedirectToAction("Index");
         }
 
 

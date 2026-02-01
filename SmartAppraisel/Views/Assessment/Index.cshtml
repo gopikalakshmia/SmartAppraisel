@@ -31,7 +31,15 @@
                     @(item.IsActive ? "Yes" : "No")
                 </td>
                 <td>
-                    <a asp-action="CreateResponse" asp-route-AssessmentID="@item.AssessmentID" class="btn btn-sm btn-warning">Add Response</a>
+                    @{if (item.IsReviewed)
+                        {
+                            <span class="badge bg-success">Reviewed</span>
+                        }
+                        else
+                        {
+                            <a asp-action="Review" asp-route-AssessmentID="@item.AssessmentID" class="btn btn-sm btn-info">Review</a>
+                        }
+                    }
                     
                 </td>
             </tr>

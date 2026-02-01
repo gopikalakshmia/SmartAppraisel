@@ -12,6 +12,8 @@ namespace DL_SmartAppraisel.Abstract
                 public string CreateAssessmentResponse(AssessmentResponse newAssessmentResponse);
                 public List<AssessmentDetail> GetAllAssessments();
                 public List<CompetencyDetail> GetAllCompetencies();
+                   public List<AssessmentResponse> GetAssessmentResponses(int AssessmentID);
+                    public void ReviewAssessment(int AssessmentID, string Comment);
 
     }
 }
